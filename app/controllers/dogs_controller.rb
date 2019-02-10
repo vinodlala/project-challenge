@@ -7,7 +7,14 @@ class DogsController < ApplicationController
   # GET /dogs
   # GET /dogs.json
   def index
-    @dogs = Dog.all.paginate(page: params[:page], per_page: 5)
+    # TODO The sorted stuff breaks pagination.  Fix it.
+    @sorted = params[:sorted]
+
+    if @sorted
+      @dogs = Dog.sorted.paginate(page: params[:page], per_page: 5)
+    else
+      @dogs = Dog.all.paginate(page: params[:page], per_page: 5)
+    end
   end
 
   # GET /dogs/1
@@ -70,14 +77,14 @@ class DogsController < ApplicationController
     end
   end
 
-  # POST /dogs/:dog_id/like
+  # POST /dogs/1/like
   def like
     Like.find_or_create_by(dog_id: @dog.id, user_id: current_user.id)
 
     redirect_to @dog
   end
 
-  # DELETE /dogs/:dog_id/like
+  # DELETE /dogs/1/like
   def unlike
     like = Like.find_by(dog_id: @dog.id, user_id: current_user.id)
 

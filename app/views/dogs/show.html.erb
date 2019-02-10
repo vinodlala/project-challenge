@@ -7,11 +7,12 @@
 
   <p><%= @dog.description %></p>
 
-  <!--<h3><%= pluralize(@dog.likes.count, 'like') %></h3>-->
   <%= render partial: 'likes', locals: { dog: @dog }  %>
 
-  <% unless current_user_owns_dog? %>
-    <%= render partial: "like", locals: { dog: @dog} %>
+  <% if current_user %>
+    <% unless current_user_owns_dog? %>
+      <%= render partial: "like", locals: { dog: @dog} %>
+    <% end %>
   <% end %>
 
   <% if current_user_owns_dog? %>

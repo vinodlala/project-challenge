@@ -15,7 +15,7 @@ RSpec.describe DogsController, type: :controller do
         end
 
         context "for page 1" do
-          it "5 dogs are displayed" do
+          it "displays 5 dogs" do
             get :index
 
             expect(assigns(:dogs).size).to eq(5)
@@ -23,16 +23,16 @@ RSpec.describe DogsController, type: :controller do
         end
 
         context "for page 2" do
-          it "5 dogs are displayed" do
+          it "displays 5 dogs" do
             get :index, params: { "page" => "2" }
 
             expect(assigns(:dogs).size).to eq(5)
           end
         end
 
-        # TODO - Make this test work
+        # TODO - Make this test past.  Something about the will_paginate gem.
         xcontext "for page 3" do
-          it "0 dogs are displayed" do
+          it "displays 0 dogs" do
             get :index, params: { "page" => "3" }
 
             expect(assigns(:dogs).size).to eq(0)
