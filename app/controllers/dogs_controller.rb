@@ -1,5 +1,5 @@
 class DogsController < ApplicationController
-  before_action :set_dog, only: [:show, :edit, :update, :destroy]
+  before_action :set_dog, only: %i[show edit update destroy like unlike]
   before_action :redirect_non_owner, only: %i[edit update destroy]
 
   include DogsHelper
@@ -70,16 +70,33 @@ class DogsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_dog
-      @dog = Dog.find(params[:id])
-    end
+  # POST /dogs/:dog_id/like
+  def like
+    Like.find_or_create_by(dog_id: @dog.id, user_id: current_user.id)
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def dog_params
-      params.require(:dog).permit(:name, :description, :images)
-    end
+    redirect_to @dog
+  end
+
+  # DELETE /dogs/:dog_id/like
+  def unlike
+    like = Like.find_by(dog_id: @dog.id, user_id: current_user.id)
+
+    like.delete if like
+
+    redirect_to @dog
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_dog
+    @dog = Dog.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def dog_params
+    params.require(:dog).permit(:name, :description, :images)
+  end
 
   def redirect_non_owner
     unless current_user_owns_dog?

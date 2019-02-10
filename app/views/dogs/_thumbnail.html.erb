@@ -5,6 +5,9 @@
   </article>
 </a>
 
+<!--<h3><%= pluralize(dog.likes.count, 'like') %></h3>-->
+<%= render partial: 'likes', locals: { dog: dog}  %>
+
 <% if dog_counter.odd? %>
-  <%= image_tag("ad.jpg") %>
+  <%= image_tag('ad.jpg') %>
 <% end %>

@@ -3,4 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :dogs
   root to: "dogs#index"
+
+  post 'dogs/:id/like', to: 'dogs#like', as: 'like'
+  delete 'dogs/:id/unlike', to: 'dogs#unlike', as: 'unlike'
 end
