@@ -1,5 +1,8 @@
 class DogsController < ApplicationController
   before_action :set_dog, only: [:show, :edit, :update, :destroy]
+  before_action :redirect_non_owner, only: %i[edit update destroy]
+
+  include DogsHelper
 
   # GET /dogs
   # GET /dogs.json
@@ -77,4 +80,11 @@ class DogsController < ApplicationController
     def dog_params
       params.require(:dog).permit(:name, :description, :images)
     end
+
+  def redirect_non_owner
+    unless current_user_owns_dog?
+      redirect_back fallback_location: root_path,
+                    notice: 'Sorry, you can only edit your own dog.'
+    end
+  end
 end
