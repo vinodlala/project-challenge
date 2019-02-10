@@ -4,3 +4,7 @@
     <%= image_tag url_for(dog.images.first), class: "dog-photo", alt: "Photo of #{dog.name}" %>
   </article>
 </a>
+
+<% if dog_counter.odd? %>
+  <%= image_tag("ad.jpg") %>
+<% end %>
