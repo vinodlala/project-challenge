@@ -9,10 +9,8 @@
 
   <%= render partial: 'likes', locals: { dog: @dog }  %>
 
-  <% if current_user %>
-    <% unless current_user_owns_dog? %>
-      <%= render partial: "like_unlike", locals: { dog: @dog} %>
-    <% end %>
+  <% if current_user && !current_user_owns_dog? %>
+    <%= render partial: "like_unlike", locals: { dog: @dog} %>
   <% end %>
 
   <% if current_user_owns_dog? %>
