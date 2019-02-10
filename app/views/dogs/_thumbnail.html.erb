@@ -4,3 +4,10 @@
     <%= image_tag url_for(dog.images.first), class: "dog-photo", alt: "Photo of #{dog.name}" %>
   </article>
 </a>
+
+<!--<h3><%= pluralize(dog.likes.count, 'like') %></h3>-->
+<%= render partial: 'likes', locals: { dog: dog}  %>
+
+<% if dog_counter.odd? %>
+  <%= image_tag('ad.jpg') %>
+<% end %>
