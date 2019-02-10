@@ -11,7 +11,7 @@
 
   <% if current_user %>
     <% unless current_user_owns_dog? %>
-      <%= render partial: "like", locals: { dog: @dog} %>
+      <%= render partial: "like_unlike", locals: { dog: @dog} %>
     <% end %>
   <% end %>
 
